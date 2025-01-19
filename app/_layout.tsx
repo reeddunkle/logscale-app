@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   DarkTheme,
   DefaultTheme,
@@ -9,6 +10,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
+
 import { SQLiteProvider, openDatabaseSync } from "expo-sqlite";
 import { Suspense, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
@@ -17,6 +19,8 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import migrations from "@/drizzle/migrations";
 
 import "react-native-reanimated";
+
+const queryClient = new QueryClient();
 
 const DATABASE_NAME = "logs";
 
@@ -51,10 +55,12 @@ export default function RootLayout() {
           options={{ enableChangeListener: true }}
           useSuspense
         >
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
+          <QueryClientProvider client={queryClient}>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </QueryClientProvider>
         </SQLiteProvider>
       </Suspense>
       <StatusBar style="auto" />
