@@ -35,7 +35,7 @@ export default function HomeScreen() {
   if (logs.error) {
     return (
       <ThemedView>
-        <ThemedText>There was an error loading the loags.</ThemedText>
+        <ThemedText>There was an error loading the logs.</ThemedText>
       </ThemedView>
     );
   }
