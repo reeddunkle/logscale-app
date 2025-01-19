@@ -11,4 +11,11 @@ const zLog = z.object({
   species: zSpecies.nullable(),
 });
 
-export { zLog };
+const zNewLog = zLog.omit({
+  id: true,
+});
+
+type Log = z.infer<typeof zLog>;
+type NewLog = z.infer<typeof zNewLog>;
+
+export { zLog, zNewLog, type Log, type NewLog };
