@@ -22,7 +22,7 @@ import "react-native-reanimated";
 
 const queryClient = new QueryClient();
 
-const DATABASE_NAME = "logs";
+const DATABASE_NAME = "db.db";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

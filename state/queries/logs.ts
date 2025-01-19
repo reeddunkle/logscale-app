@@ -1,15 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-
-import { drizzle } from "drizzle-orm/expo-sqlite";
+import { drizzle, useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { useSQLiteContext } from "expo-sqlite";
+import * as schema from "@/db/schema";
 
 function useLogsQuery() {
   const db = useSQLiteContext();
-  const drizzleDb = drizzle(db);
+  const drizzleDb = drizzle(db, { schema });
 
-  return useQuery({
-    queryFn: async () => {
-      return drizzleDb.query.logs.findMany();
-    },
-  });
+  return useLiveQuery(drizzleDb.query.logs.findMany());
 }
+
+export { useLogsQuery };
