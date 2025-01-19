@@ -12,15 +12,15 @@ function useLogsQuery() {
   return useLiveQuery(drizzleDb.query.logs.findMany());
 }
 
-function useLogCreate(newLog: NewLog) {
+function useLogsCreate(newLogs: NewLog[]) {
   const db = useSQLiteContext();
   const drizzleDb = drizzle(db, { schema });
 
   return useMutation({
     mutationFn: async () => {
-      return drizzleDb.insert(schema.logs).values([newLog]);
+      return drizzleDb.insert(schema.logs).values(newLogs);
     },
   });
 }
 
-export { useLogCreate, useLogsQuery };
+export { useLogsCreate, useLogsQuery };
