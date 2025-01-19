@@ -38,12 +38,12 @@ export default function RootLayout() {
   const { success, error } = useMigrations(db, migrations);
 
   useEffect(() => {
-    if (loaded) {
+    if (loaded && success) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [loaded, success]);
 
-  if (!loaded) {
+  if (!loaded || !success) {
     return null;
   }
 
