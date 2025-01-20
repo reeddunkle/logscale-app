@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 import { Alert, Button, StyleSheet, TextInput } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 
@@ -15,7 +15,7 @@ type LogFormValues = NewLog;
 export default function LogFormScreen() {
   const logs = useLogsQuery();
 
-  const { control, handleSubmit } = useForm<LogFormValues>({
+  const form = useForm<LogFormValues>({
     defaultValues: {
       diameter: undefined,
       grade: undefined,
@@ -24,6 +24,8 @@ export default function LogFormScreen() {
     },
     resolver: zodResolver(logFormSchema),
   });
+
+  const { control, handleSubmit } = form;
 
   if (logs.error) {
     return (
@@ -40,71 +42,73 @@ export default function LogFormScreen() {
   if (logs.data) {
     return (
       <ThemedView>
-        <ThemedText>Diameter</ThemedText>
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Diameter"
-              onBlur={onBlur}
-              onChangeText={(text) => onChange(Number(text))}
-              value={value ? String(value) : ""}
-            />
-          )}
-          name="diameter"
-        />
-        <ThemedText>Grade</ThemedText>
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Grade"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value ?? ""}
-            />
-          )}
-          name="grade"
-        />
-        <ThemedText>Length</ThemedText>
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Length"
-              onBlur={onBlur}
-              onChangeText={(text) => onChange(Number(text))}
-              value={value ? String(value) : ""}
-            />
-          )}
-          name="length"
-        />
-        <ThemedText>Species</ThemedText>
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, value } }) => (
-            <RNPickerSelect
-              items={speciesOptions}
-              onValueChange={onChange}
-              placeholder="Species"
-              value={value ?? ""}
-            />
-          )}
-          name="species"
-        />
-        <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+        <FormProvider {...form}>
+          <ThemedText>Diameter</ThemedText>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="Diameter"
+                onBlur={onBlur}
+                onChangeText={(text) => onChange(Number(text))}
+                value={value ? String(value) : ""}
+              />
+            )}
+            name="diameter"
+          />
+          <ThemedText>Grade</ThemedText>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="Grade"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value ?? ""}
+              />
+            )}
+            name="grade"
+          />
+          <ThemedText>Length</ThemedText>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="Length"
+                onBlur={onBlur}
+                onChangeText={(text) => onChange(Number(text))}
+                value={value ? String(value) : ""}
+              />
+            )}
+            name="length"
+          />
+          <ThemedText>Species</ThemedText>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, value } }) => (
+              <RNPickerSelect
+                items={speciesOptions}
+                onValueChange={onChange}
+                placeholder="Species"
+                value={value ?? ""}
+              />
+            )}
+            name="species"
+          />
+          <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+        </FormProvider>
       </ThemedView>
     );
   }
