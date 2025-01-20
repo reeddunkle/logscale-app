@@ -13,7 +13,7 @@ type LogProps = {
   log: Log;
 };
 
-const Log = ({ log }: LogProps) => {
+const LogRow = ({ log }: LogProps) => {
   return (
     <ThemedView>
       <ThemedText>{log.id}</ThemedText>
@@ -38,7 +38,7 @@ export default function HomeScreen() {
       <FlatList
         data={logs.data}
         renderItem={({ item }) => {
-          return <Log log={item} />;
+          return <LogRow log={item} />;
         }}
       />
     );

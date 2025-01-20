@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { drizzle, useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { useSQLiteContext } from "expo-sqlite";
-import * as schema from "@/db/schema";
 
+import * as schema from "@/db/schema";
 import { type NewLog } from "@/validation/log";
 
 function useLogsQuery() {
