@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, TextInput } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -20,7 +20,7 @@ const LogRow = ({ log }: LogProps) => {
   );
 };
 
-export default function HomeScreen() {
+export default function LogsScreen() {
   const logs = useLogsQuery();
 
   if (logs.error) {
@@ -33,12 +33,14 @@ export default function HomeScreen() {
 
   if (logs.data) {
     return (
-      <FlatList
-        data={logs.data}
-        renderItem={({ item }) => {
-          return <LogRow log={item} />;
-        }}
-      />
+      <ThemedView>
+        <FlatList
+          data={logs.data}
+          renderItem={({ item }) => {
+            return <LogRow log={item} />;
+          }}
+        />
+      </ThemedView>
     );
   }
 }

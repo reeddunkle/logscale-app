@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const zSpecies = z.enum([
+const SPECIES_KEYS = [
   "ASH",
   "ASPEN",
   "BASSWOOD",
@@ -15,7 +15,9 @@ const zSpecies = z.enum([
   "RED_OAK",
   "SOFT_MAPLE",
   "WHITE_OAK",
-]);
+] as const;
+
+const zSpecies = z.enum(SPECIES_KEYS);
 
 type SpeciesEnum = z.infer<typeof zSpecies>;
 
@@ -36,4 +38,11 @@ const speciesLabelMap: Record<SpeciesEnum, string> = {
   WHITE_OAK: "White Oak",
 };
 
-export { speciesLabelMap, type SpeciesEnum, zSpecies };
+const speciesOptions = SPECIES_KEYS.map((key) => {
+  return {
+    label: speciesLabelMap[key],
+    value: key,
+  };
+});
+
+export { speciesOptions, type SpeciesEnum, zSpecies };
