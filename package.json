@@ -7,12 +7,12 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\" --ignore-path .gitignore"
   },
   "devDependencies": {
-    "prettier": "^3.1.1",
+    "prettier": "^3.6.2",
     "turbo": "^2.5.4"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "name": "with-react-native-web",
-  "packageManager": "pnpm@10.4.1"
+  "packageManager": "pnpm@10.12.4"
 }
